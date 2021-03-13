@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8"> 
@@ -9,46 +9,11 @@ honor, I have neither received nor given any unauthorized assistance on this ass
 		body {background-color: black; color: pink;}		
         </style>
 		<script>
- 	var destination = "destinationData";
-    var airtravel = "tripData";
-    var hotelnights = "nightsData";
-    var tour = "tourData";
-    var totalprice = 0;
-    var finalprice = 0;
-    var finalvalue = 0;
-    var totalvalue = 0;
-    var hotelprice = 0;
-    var price = 0;
-    if (destination == "Europe"){
-        if (airtravel == "oneWay"){
-            price += 500;
-        } 
-        else if (airtravel == "roundTrip"){
-            price += 900;
-        }
-        price = (hotelnights*300) + price;
-        if (tour == "grand"){
-            price += 1500;
-        }
-        else if (tour == "basic"){
-            price += 800;
-        }
-    }
-    else if (destination == "Africa"){
-        if (airtravel == "oneWay"){
-            price += 700;
-        } 
-        else if (airtravel == "roundTrip"){
-            price += 1300;
-        }
-        price = (hotelnights*200) + price;
-        if (tour == "grand"){
-            price += 1300;
-        }
-        else if (tour == "basic"){
-            price += 500;
-        }
-    }
+            var destination;
+            var airtravel;
+            var hotelnights;
+            var tour;
+            var price;
     	</script>
  	</head>
 	<body>
@@ -56,35 +21,70 @@ honor, I have neither received nor given any unauthorized assistance on this ass
  		<h2>Price Processing</h2>
 		<p>
  	  	 	Select Destination: 
-        <input type="radio" id="Europe" name="destination" value="Europe" onclick="destinationData='Europe'">
+        <input type="radio" id="Europe" name="destination" value="Europe" onclick="destination='Europe'">
         <label for="Europe">Europe</label>
-        <input type="radio" id="Africa" name="destination" value="Africa" onclick="destinationData='Africa'">
+        <input type="radio" id="Africa" name="destination" value="Africa" onclick="destination='Africa'">
         <label for="Africa">Africa</label>
  	  	</p>
 		<p>
  	  	        Select Air Travel option: 
-		<input type="radio" id="oneWay" name="airtravel" value="oneWay" onclick="tripData='one-way'">
+		<input type="radio" id="oneWay" name="airtravel" value="oneWay" onclick="airtravel='one-way'">
         <label for="oneWay">One Way</label>
-        <input type="radio" id="roundTrip" name="airtravel" value="roundTrip" onclick="tripData='round-trip'">
+        <input type="radio" id="roundTrip" name="airtravel" value="roundTrip" onclick="airtravel='round-trip'">
         <label for="roundTrip">Round Trip</label>
 		</p>
         <p>
  	  	 	Enter number of Hotel nights: 
-        <input type="number" id="hotelnights" name="hotelnights" onchange="nightsData=this.value"> 	  	
+        <input type="number" id="hotelnights" name="hotelnights" onchange="hotelnights=this.value"> 	  	
         </p>
 		<p>
  	  	        Select Tour type: 
- 		<input type="radio" id="grand" name="tour" value="grand" onclick="tourData='grand'">
+ 		<input type="radio" id="grand" name="tour" value="grand" onclick="tour='grand'">
         <label for="grand">Grand Package</label>
-        <input type="radio" id="basic" name="tour" value="basic" onclick="tourData='basic'">
+        <input type="radio" id="basic" name="tour" value="basic" onclick="tour='basic'">
         <label for="basic">Basic Package</label>
 		</p>
  	  	<p>
         <button onclick='
-			totalprice = price;
-            totalprice.value = totalprice.toFixed(2);
+            var price = 0;
+            if (destination == "Europe"){
+                if (airtravel == "one-way"){
+                    price += 500;
+                } 
+                else if (airtravel == "round-trip"){
+                    price += 900;
+                }
+                console.log(price);
+                price = (hotelnights*300) + price;
+                console.log(price);
+                if (tour == "grand"){
+                    price += 1500;
+                }
+                else if (tour == "basic"){
+                    price += 800;
+                }
+                console.log(price);
+            }
+            else if (destination == "Africa"){
+                if (airtravel == "oneWay"){
+                    price += 700;
+                } 
+                else if (airtravel == "roundTrip"){
+                    price += 1300;
+                }
+                price = (hotelnights*200) + price;
+                if (tour == "grand"){
+                    price += 1300;
+                }
+                else if (tour == "basic"){
+                    price += 500;
+                }
+            }
+
+            totalprice = price;
             finalprice = totalprice*1.15;
-            finalprice.value = finalprice.toFixed(2);
+            document.getElementById("totalprice").value = totalprice.toFixed(2);
+            document.getElementById("finalprice").value = finalprice.toFixed(2);
         '>Calculate Price</button>
  	  	</p>
 		<p>
@@ -97,8 +97,27 @@ honor, I have neither received nor given any unauthorized assistance on this ass
     	<input type="text" id="finalprice" name="finalprice"> 	  	
     	</p>
  	  	<p>    
-		<button onclick = '
-		    <button class="btn">Clear</button>
+        <button onclick = '
+            var destination = "";
+            var airtravel = "";
+            var hotelnights = "";
+            var tour = "";
+            var price = 0;
+
+            document.getElementById("totalprice").value = "";
+            document.getElementById("finalprice").value = "";
+
+            var inputs = document.getElementsByTagName("input");
+
+            for(var i = 0; i < inputs.length; i++) {
+                if(inputs[i].type.toLowerCase() == "radio") {
+                    inputs[i].checked = false;
+                }
+                else if (inputs[i].type.toLocaleLowerCase() == "number") {
+                    inputs[i].value = "";
+                }
+                
+            }
         '>Clear</button>
 		</p>
  	</body>
